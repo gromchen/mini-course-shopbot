@@ -76,4 +76,8 @@ app.use(function (err, req, res, next) {
     })
 });
 
-app.listen(process.env.PORT || 9600);
+const port = process.env.PORT;
+
+app.listen(port || 9600, () => {
+    console.log(`Running on port ${port}`)
+});
