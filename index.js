@@ -32,6 +32,10 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.get("/prob", (req, res) => {
+    res.json({ success: true })
+})
+
 app.post("/orders", (req, res, next) => {
     if (req.body && req.body.apiKey !== 'secretKey') {
         throw new RestError("Access forbidden, wrong apiKey", 403);
