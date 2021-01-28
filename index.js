@@ -10,7 +10,7 @@ class RestError extends Error {
     }
 }
 
-const bot = new TelegramBot(process.env.telegram_token, { polling: true });
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
 
 const users = [];
 
@@ -72,4 +72,4 @@ app.use(function (err, req, res, next) {
     })
 });
 
-app.listen(9600);
+app.listen(process.env.PORT || 9600);
