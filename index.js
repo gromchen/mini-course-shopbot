@@ -1,10 +1,7 @@
-const Telegram = require("node-telegram-bot-api");
+const TelegramBot = require("node-telegram-bot-api");
 const express = require("express");
 const cors = require('cors')
 const bodyParser = require('body-parser');
-
-const API_KEY = '806062890:AAE59OFfvTK7MzrRq-88yE5hPSPKaezPaxY';
-const PORT = 9600;
 
 class RestError extends Error {
     constructor(message, status = 500) {
@@ -13,17 +10,15 @@ class RestError extends Error {
     }
 }
 
-const Bot = new Telegram(API_KEY, {
-    polling: true
-});
+const bot = new TelegramBot(process.env.telegram_token, { polling: true });
 
 const users = [];
 
-Bot.on('polling_error', (error) => {
+bot.on('polling_error', (error) => {
     console.log(error);  // => 'EFATAL'
 });
 
-Bot.on("message", (message) => {
+bot.on("message", (message) => {
     if (!users.includes(message.from.id)) {
         users.push(message.from.id)
     }
@@ -42,7 +37,7 @@ app.post("/orders", (req, res, next) => {
         throw new RestError("Access forbidden, wrong apiKey", 403);
     }
     users.map((user) => {
-        return Bot.sendMessage(user, req.body.message, {
+        return bot.sendMessage(user, req.body.message, {
             parse_mode: "HTML"
         })
     })
@@ -77,4 +72,4 @@ app.use(function (err, req, res, next) {
     })
 });
 
-app.listen(PORT);
+app.listen(9600);
