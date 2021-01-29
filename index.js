@@ -38,7 +38,7 @@ app.post("/orders", (req, res, next) => {
     }
     users.map((user) => {
         return bot.sendMessage(user, req.body.message, {
-            parse_mode: "HTML"
+            parse_mode: "MarkdownV2"
         })
     })
     res.json({
